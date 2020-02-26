@@ -1,7 +1,7 @@
 jobs:
  - name: test
    plan:
-      - get: repo
+      - { get: repo, trigger: true }
       - task: test
         config:
           platform: linux
@@ -14,8 +14,10 @@ jobs:
             path: /bin/bash
             args:
               - -c
-              - set -e
+              - |
+                set -e
                 cd repo
+                npm install
                 npm run tests
 
 resources:
