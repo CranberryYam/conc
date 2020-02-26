@@ -21,7 +21,11 @@ configure_fly:
 fly: install_fly configure_fly
 	./fly --target leap $(ARGS)
 
-deploy_pipline: install_fly configure_fly
+deploy_pipeline: install_fly configure_fly
 	./fly --target leap set-pipeline --pipeline henry-conc --config ./pipeline.yaml -n
+	./fly -t leap unpause-pipeline -p henry-conc
+
+trigger_pipeline: install_fly configure_fly
+	./fly -t leap trigger-job -j henry-conc/test
 
 #export CONCOURSE_PASSWORD=Q9WeWxqvCZh5ID4zh1C/6QNOxydsXRcx
