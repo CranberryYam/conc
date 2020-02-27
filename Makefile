@@ -8,6 +8,12 @@ __check_defined = \
 CONCOURSE_URL := "https://concourse.leap.cloud-nbcuniversaltech.com"
 CONCOURSE_USER := "concourse"
 
+build_image:
+	docker build -t test-app .
+
+docker_run:
+	docker run -it -p "3000:3000" test-app
+
 install_fly:
 	$(eval OS_TYPE := $(if $(filter $(shell uname),Darwin), darwin,linux))
 	$(shell test -e ./fly || (curl -o ./fly "$(CONCOURSE_URL)/api/v1/cli?arch=amd64&platform=$(OS_TYPE)" && chmod +x ./fly))
